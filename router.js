@@ -43,9 +43,9 @@ const image = (path, response) => {
 
 ////////////////////////////////////////////////
 // listener
-emitEvent.on("log", (event, level, message) => {
-  if (global.DEBUG) logger.logEvent(event, level, message);
-});
+// emitEvent.on("log", (event, level, message) => {
+//   if (global.DEBUG) logger.logEvent(event, level, message);
+// });
 
 ////////////////////////////////////////////////
 // export
