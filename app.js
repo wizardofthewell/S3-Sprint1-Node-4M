@@ -1,12 +1,14 @@
+// imports
+const server = require("./server");
+const logger = require("./logger");
 ////////////////////////////////////////////////
+
 // globals
 global.DEBUG = true;
 global.STYLE = '<link rel="stylesheet" href="files/style.css" />';
 global.NAV = '<nav><a href="/subscribe">subscribe</a></nav>';
 
 ////////////////////////////////////////////////
-// imports
-const server = require("./server");
 
 ////////////////////////////////////////////////
 // listeners

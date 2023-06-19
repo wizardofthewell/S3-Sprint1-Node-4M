@@ -6,7 +6,7 @@ const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
 const fs = require("fs");
-
+const fourOhFour = require("./views/404");
 ////////////////////////////////////////////////
 // website routes
 const indexPage = (response) => {
@@ -14,7 +14,11 @@ const indexPage = (response) => {
   response.statusCode = 200;
   index.page(response);
 };
-
+const notFoundPage = (response) => {
+  if (global.DEBUG) console.log("Requested page does not exist.");
+  response.statusCode = 200;
+  fourOhFour.page(response);
+};
 ////////////////////////////////////////////////
 // functions
 const styleSheet = (response) => {
@@ -55,7 +59,7 @@ module.exports = {
   // contactPage,
   // productsPage,
   // subscribePage,
-  // notFoundPage,
+  notFoundPage,
   // weatherPage,
   // stylePage,
   // imageRes,
