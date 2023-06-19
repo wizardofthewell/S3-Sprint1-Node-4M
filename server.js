@@ -65,12 +65,11 @@ const serverSwitch = http.createServer(async (req, res) => {
   }
 });
 
-// this is here for logging implementation
 ////////////////////////////////////////////////
 // listen for event "log"
-// emitEvent.on("log", (event, level, message) => {
-//   if (global.DEBUG) logger.logEvent(event, level, message);
-// });
+emitEvent.on("log", (event, level, message) => {
+  if (global.DEBUG) logger.logEvent(event, level, message);
+});
 
 ////////////////////////////////////////////////
 // export
