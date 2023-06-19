@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////
 // Imports
-const index = require("../views/index");
+const index = require("./views/index");
 const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
@@ -43,21 +43,21 @@ const image = (path, response) => {
 
 ////////////////////////////////////////////////
 // listener
-// emitEvent.on("log", (event, level, message) => {
-//   if (global.DEBUG) logger.logEvent(event, level, message);
-// });
+emitEvent.on("log", (event, level, message) => {
+  if (global.DEBUG) logger.logEvent(event, level, message);
+});
 
 ////////////////////////////////////////////////
 // export
 module.exports = {
   indexPage,
-  aboutPage,
-  contactPage,
-  productsPage,
-  subscribePage,
-  notFoundPage,
-  weatherPage,
-  stylePage,
-  imageRes,
-  newsPage,
+  // aboutPage,
+  // contactPage,
+  // productsPage,
+  // subscribePage,
+  // notFoundPage,
+  // weatherPage,
+  // stylePage,
+  // imageRes,
+  // newsPage,
 };

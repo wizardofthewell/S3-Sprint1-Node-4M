@@ -78,6 +78,5 @@ emitEvent.on("log", (event, level, message) => {
 ////////////////////////////////////////////////
 // export
 module.exports = {
-  serverSwitch,
   start,
 };
