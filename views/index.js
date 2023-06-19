@@ -8,6 +8,7 @@ const page = async (res) => {
   try {
     await res.writeHead(res.statusCode, { "Content-Type": "text/html" });
     // await res.end(`${head}<body>${header}</body>`);
+    res.end();
   } catch (error) {
     res.statusCode = 500;
     console.error(error.message);
