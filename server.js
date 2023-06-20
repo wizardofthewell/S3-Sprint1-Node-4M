@@ -64,7 +64,10 @@ const serverSwitch = http.createServer(async (req, res) => {
       }
   }
 });
-
+const start = () => {
+  serverSwitch.listen(3000);
+};
+// this is here for logging implementation
 ////////////////////////////////////////////////
 // listen for event "log"
 emitEvent.on("log", (event, level, message) => {
@@ -73,4 +76,7 @@ emitEvent.on("log", (event, level, message) => {
 
 ////////////////////////////////////////////////
 // export
-module.exports = { serverSwitch };
+module.exports = {
+  start,
+  serverSwitch,
+};
