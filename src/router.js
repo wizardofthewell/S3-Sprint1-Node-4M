@@ -41,6 +41,12 @@ const image = (path, response) => {
   });
 };
 
+const notFoundPage = (response) => {
+  if (global.DEBUG) console.log("Requested page does not exist.");
+  response.statusCode = 200;
+  res.end();
+};
+
 ////////////////////////////////////////////////
 // listener
 emitEvent.on("log", (event, level, message) => {
@@ -51,13 +57,13 @@ emitEvent.on("log", (event, level, message) => {
 // export
 module.exports = {
   indexPage,
-  aboutPage,
-  contactPage,
-  productsPage,
-  subscribePage,
-  notFoundPage,
-  weatherPage,
-  stylePage,
-  imageRes,
-  newsPage,
+  // aboutPage,
+  // contactPage,
+  // productsPage,
+  // subscribePage,
+  // notFoundPage,
+  // weatherPage,
+  // stylePage,
+  // imageRes,
+  // newsPage,
 };
