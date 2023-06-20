@@ -1,5 +1,5 @@
 // imports
-const server = require("./server");
+const server = require("./src/server");
 ////////////////////////////////////////////////
 
 // globals

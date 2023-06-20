@@ -1,12 +1,12 @@
 ////////////////////////////////////////////////
 // Imports
-const index = require("./views/index");
-const logger = require("./logger");
+const index = require("../views/index");
+const logger = require("../logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
 const fs = require("fs");
-const fourOhFour = require("./views/404");
+
 ////////////////////////////////////////////////
 // website routes
 const indexPage = (response) => {
@@ -14,11 +14,7 @@ const indexPage = (response) => {
   response.statusCode = 200;
   index.page(response);
 };
-const notFoundPage = (response) => {
-  if (global.DEBUG) console.log("Requested page does not exist.");
-  response.statusCode = 200;
-  fourOhFour.page(response);
-};
+
 ////////////////////////////////////////////////
 // functions
 const styleSheet = (response) => {
@@ -55,13 +51,13 @@ emitEvent.on("log", (event, level, message) => {
 // export
 module.exports = {
   indexPage,
-  // aboutPage,
-  // contactPage,
-  // productsPage,
-  // subscribePage,
+  aboutPage,
+  contactPage,
+  productsPage,
+  subscribePage,
   notFoundPage,
-  // weatherPage,
-  // stylePage,
-  // imageRes,
-  // newsPage,
+  weatherPage,
+  stylePage,
+  imageRes,
+  newsPage,
 };
