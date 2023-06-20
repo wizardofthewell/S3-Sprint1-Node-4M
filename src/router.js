@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////
 // Imports
 const index = require("../views/index");
-const logger = require("./logger");
+const logger = require("../logs/logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
