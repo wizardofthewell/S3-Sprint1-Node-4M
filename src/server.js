@@ -2,7 +2,7 @@
 // imports
 const http = require("http");
 const router = require("./router");
-const logger = require("./logger");
+const logger = require("../logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
