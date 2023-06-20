@@ -64,6 +64,7 @@ const serverSwitch = http.createServer(async (req, res) => {
       }
   }
 });
+
 const start = () => {
   serverSwitch.listen(3000);
 };
@@ -78,5 +79,4 @@ emitEvent.on("log", (event, level, message) => {
 // export
 module.exports = {
   start,
-  serverSwitch,
 };
