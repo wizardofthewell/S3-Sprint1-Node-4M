@@ -17,15 +17,17 @@ const indexPage = (response) => {
 
 ////////////////////////////////////////////////
 // functions
-const styleSheet = (response) => {
+const styleSheet = async (response) => {
   // .views bc stack begins at App.js
-  fs.readFile("./views/files/style.css", (err, data) => {
+  await fs.readFile("./views/files/style.css", async (err, data) => {
     if (err) {
       response.writeHead(404, { "Content-Type": "text/plain" });
       response.end("File not found");
     } else {
     }
-    response.writeHead(response.statusCode, { "Content-Type": "text/css" });
+    response.writeHead(response.statusCode, {
+      "Content-Type": "text/css",
+    });
     response.end(data);
   });
 };
