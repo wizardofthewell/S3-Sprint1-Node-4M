@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////
 // Imports
 const index = require("../views/index");
-const logger = require("../logger");
+const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
@@ -17,6 +17,18 @@ const indexPage = (response) => {
 
 ////////////////////////////////////////////////
 // functions
+const styleSheet = (response) => {
+  // .views bc stack begins at App.js
+  fs.readFile("./views/files/style.css", (err, data) => {
+    if (err) {
+      response.writeHead(404, { "Content-Type": "text/plain" });
+      response.end("File not found");
+    } else {
+    }
+    response.writeHead(response.statusCode, { "Content-Type": "text/css" });
+    response.end(data);
+  });
+};
 
 const notFoundPage = (response) => {
   if (global.DEBUG) console.log("Requested page does not exist.");
@@ -35,4 +47,5 @@ emitEvent.on("log", (event, level, message) => {
 module.exports = {
   indexPage,
   notFoundPage,
+  styleSheet,
 };

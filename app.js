@@ -7,9 +7,8 @@ const server = require("./src/server");
 
 // globals
 global.DEBUG = true;
-global.STYLE =
-  '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"> </link>';
-global.NAV = `<nav><a href="/login">Login</a></nav>`;
+global.STYLE = '<link rel="stylesheet" href="/views/files/style.css" />';
+global.NAV = '<nav><a href="/login">Login</a></nav>';
 
 ////////////////////////////////////////////////
 

@@ -2,7 +2,7 @@
 // imports
 const http = require("http");
 const router = require("./router");
-const logger = require("../logger");
+const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
@@ -26,6 +26,16 @@ const serverSwitch = http.createServer(async (req, res) => {
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
+    case "/views/files/style.css":
+      res.statusCode = 100;
+      res.setHeader(
+        "Set-Cookie",
+        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+      );
+      router.styleSheet(res);
+      emitEvent.emit("log", "server", "STYLE", `${req.url} visited`);
+      break;
+
     default:
       res.statusCode = 404;
       res.setHeader(
@@ -44,6 +54,9 @@ const serverSwitch = http.createServer(async (req, res) => {
 });
 
 const start = () => {
+  if (global.DEBUG) {
+    console.log("Listening on port 3000...");
+  }
   serverSwitch.listen(3000);
 };
 
