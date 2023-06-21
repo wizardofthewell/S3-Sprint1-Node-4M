@@ -37,7 +37,7 @@ const logEvent = async (event, level, message) => {
 ////////////////////////////////////////////////
 // listener
 emitEvent.on('log', (event, level, message) => {
-	if (global.DEBUG) logger.logEvent(event, level, message);
+	if (global.DEBUG) logEvent(event, level, message);
 });
 
 ////////////////////////////////////////////////
