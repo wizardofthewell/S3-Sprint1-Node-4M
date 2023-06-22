@@ -1,4 +1,8 @@
 ////////////////////////////////////////////////
+// components
+const SingUpForm = require("./components/SignUp-Form");
+
+////////////////////////////////////////////////
 // framework
 
 const page = async (res) => {
@@ -8,7 +12,9 @@ const page = async (res) => {
   const header = `<header><h1>${name}</h1><nav><a href="/login">Have an account?</a></nav></header>`;
   try {
     await res.writeHead(res.statusCode, { "Content-Type": "text/html" });
-    await res.end(`${head}<body>${header}</body>`);
+    await res.end(
+      `${head}<body>${header}<div id="box">${SingUpForm.form()}</div></body>`
+    );
   } catch (error) {
     res.statusCode = 500;
     console.error(error.message);

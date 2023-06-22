@@ -37,11 +37,11 @@ a {
   padding: 16px 32px;
 }
 
-#login-form {
+.form {
   margin: auto;
 }
 
-.login-button {
+.submit-button {
   display: flex;
 }
 
