@@ -23,7 +23,7 @@ const loginPage = (response) => {
   login.page(response);
 };
 
-const signupPage = (response) => {
+const signUpPage = (response) => {
   if (global.DEBUG) console.log("Login page requested");
   response.statusCode = 200;
   signUp.page(response);
@@ -63,5 +63,5 @@ module.exports = {
   notFoundPage,
   styleSheet,
   loginPage,
-  signupPage,
+  signUpPage,
 };

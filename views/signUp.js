@@ -2,7 +2,7 @@
 // framework
 
 const page = async (res) => {
-  const name = "Login";
+  const name = "Sign Up";
   const style = global.STYLE;
   const head = `<head>${style}<title>${name}</title></head>`;
   const header = `<header><h1>${name}</h1><nav><a href="/login">Have an account?</a></nav></header>`;
