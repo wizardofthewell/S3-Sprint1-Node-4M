@@ -2,6 +2,7 @@
 // Imports
 const index = require("../views/index");
 const login = require("../views/login");
+const signUp = require("../views/signUp");
 const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
@@ -20,6 +21,12 @@ const loginPage = (response) => {
   if (global.DEBUG) console.log("Login page requested");
   response.statusCode = 200;
   login.page(response);
+};
+
+const signupPage = (response) => {
+  if (global.DEBUG) console.log("Login page requested");
+  response.statusCode = 200;
+  signUp.page(response);
 };
 
 const notFoundPage = (response) => {
@@ -56,4 +63,5 @@ module.exports = {
   notFoundPage,
   styleSheet,
   loginPage,
+  signupPage,
 };

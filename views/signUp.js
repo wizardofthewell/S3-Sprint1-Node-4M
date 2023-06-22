@@ -5,7 +5,7 @@ const page = async (res) => {
   const name = "Login";
   const style = global.STYLE;
   const head = `<head>${style}<title>${name}</title></head>`;
-  const header = `<header><h1>${name}</h1><nav><a href="/signup">No account?</a></nav></header>`;
+  const header = `<header><h1>${name}</h1><nav><a href="/login">Have an account?</a></nav></header>`;
   try {
     await res.writeHead(res.statusCode, { "Content-Type": "text/html" });
     await res.end(`${head}<body>${header}</body>`);

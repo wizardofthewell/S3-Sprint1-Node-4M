@@ -36,6 +36,16 @@ const serverSwitch = http.createServer(async (req, res) => {
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
+    case "/signup":
+      res.statusCode = 100;
+      res.setHeader(
+        "Set-Cookie",
+        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+      );
+      await router.signUpPage(res);
+      emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
+      break;
+
     case "/views/files/style.css":
       res.statusCode = 100;
       res.setHeader(
