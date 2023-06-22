@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  max-width: 100%;
+}
+
+header nav {
+  margin-left: auto;
+  display: flex;
+}
+
+nav a {
+  margin: 16px 16px 0 0;
+}
+
+a:hover {
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 1);
+}
+
+img {
+  max-width: 30%;
+  box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.65);
+}
+
+figure {
+  margin: 16px;
+}
+
+figure img:hover {
+  width: 0;
+  height: 0;
+}
+
+figcaption {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+#hideme {
+  position: absolute;
+  top: 72px;
+  left: 72px;
+}
