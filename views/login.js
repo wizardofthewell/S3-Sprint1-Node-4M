@@ -1,6 +1,9 @@
 ////////////////////////////////////////////////
-// framework
+// components
+const LoginForm = require("./components/Login-Form");
 
+////////////////////////////////////////////////
+// framework
 const page = async (res) => {
   const name = "Login";
   const style = global.STYLE;
@@ -8,7 +11,7 @@ const page = async (res) => {
   const header = `<header><h1>${name}</h1><nav><a href="/signup">No account?</a></nav></header>`;
   try {
     await res.writeHead(res.statusCode, { "Content-Type": "text/html" });
-    await res.end(`${head}<body>${header}</body>`);
+    await res.end(`${head}<body>${header}${LoginForm.form()}</body>`);
   } catch (error) {
     res.statusCode = 500;
     console.error(error.message);
