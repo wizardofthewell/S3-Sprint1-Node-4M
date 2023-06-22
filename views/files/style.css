@@ -45,13 +45,3 @@ figcaption {
   font-style: italic;
   text-decoration: underline;
 }
-
-#hideme {
-  position: absolute;
-  top: 72px;
-  left: 72px;
-}
-
-#box {
-  border: 2px solid red;
-}
