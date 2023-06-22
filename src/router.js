@@ -25,6 +25,7 @@ const styleSheet = (response) => {
       response.end("File not found");
     } else {
     }
+    response.writeHead(200, { "Content-Type": "text/css" });
     response.end(data);
   });
 };

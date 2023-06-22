@@ -5,8 +5,7 @@ const server = require("./src/server");
 ////////////////////////////////////////////////
 // globals
 global.DEBUG = true;
-global.STYLE =
-  '<link rel="stylesheet" type="text/css" href="./views/files/style.css" />';
+global.STYLE = '<link rel="stylesheet" href="/views/files/style.css" />';
 global.NAV = '<nav><a href="/login">Login</a></nav>';
 
 ////////////////////////////////////////////////
