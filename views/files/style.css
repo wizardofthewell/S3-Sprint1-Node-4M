@@ -27,27 +27,28 @@ a {
   color: rgba(0, 0, 0, 1);
 }
 
-img {
-  max-width: 30%;
-  box-shadow: 4px 8px 12px rgba(0, 0, 0, 0.65);
+#box {
+  border: 2px solid rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.15);
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: 42px auto;
+  padding: 16px 32px;
 }
 
-figure {
-  margin: 16px;
+.form {
+  margin: auto;
 }
 
-figure img:hover {
-  width: 0;
-  height: 0;
+.submit-button {
+  display: flex;
 }
 
-figcaption {
-  font-style: italic;
-  text-decoration: underline;
+input {
+  margin: 12px auto;
 }
 
-#hideme {
-  position: absolute;
-  top: 72px;
-  left: 72px;
+.title {
+  margin: auto 32px;
 }
