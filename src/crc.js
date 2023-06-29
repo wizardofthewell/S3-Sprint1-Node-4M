@@ -62,7 +62,8 @@ function newToken(userName, email, phone) {
     expires: exp,
     confirmed: access,
   };
-
+  // now, i was gonna use listTokens, but they serve different purpose. list posts to console.
+  // we need to read to a variable
   fs.readFile("./json/tokens.json", (err, data) => {
     if (err) {
       console.log(err);
