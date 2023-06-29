@@ -13,6 +13,10 @@ const tokenApp = async (args) => {
     case "-n":
       token.newToken(args.slice(1));
       break;
+    case "--list":
+    case "-l":
+      token.tokenList();
+      break;
     case "--upd":
     case "-u":
       token.updateToken(args);
@@ -30,10 +34,10 @@ app token --upd e <username> <email>  updates the json entry with email
 app token --search u <username>       fetches a token for a given username
 app token --search e <email>          fetches a token for a given email
 app token --search p <phone>          fetches a token for a given phone number
-app token --help
+app token --list                      Lists the current Tokens stored in tokens.json file
+app token --help                      displays this menu
         `);
       break;
-
     default: {
       console.log(`
 app token --count                     displays a count of the tokens created
@@ -43,7 +47,8 @@ app token --upd e <username> <email>  updates the json entry with email
 app token --search u <username>       fetches a token for a given username
 app token --search e <email>          fetches a token for a given email
 app token --search p <phone>          fetches a token for a given phone number
-app token --help
+app token --list                      Lists the current Tokens stored in tokens.json file
+app token --help                      displays this menu
         `);
       break;
     }

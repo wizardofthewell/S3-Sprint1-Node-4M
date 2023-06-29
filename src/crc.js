@@ -15,36 +15,24 @@ global.DEBUG = true;
 var tokenCount = function () {
   if (global.DEBUG) console.log("token.tokenCount()");
   return new Promise((resolve, reject) => {
-    fs.readFile(path.join(__dirname, "/json/tokens.json"), (err, data) => {
+    fs.readFile("./json/tokens.json", async (err, data) => {
       if (err) reject(err);
-      else {
-        let tokens = JSON.parse(data);
-        let count = Object.keys(tokens).length;
-        console.log(`Current token count: ${count}`);
-        myEmitter.emit(
-          "log",
-          "token.tokencount",
-          "INFO",
-          `Current token count: ${count}`
-        );
-        resolve(count);
-      }
+      let tokens = await JSON.parse(data);
+      console.log(`Current token count: ${tokens.length}`);
     });
   });
 };
 
 function tokenList() {
   if (global.DEBUG) console.log("token.tokenList()");
-  fs.readFile(__dirname + "/json/tokens.json", (err, data) => {
+  fs.readFile("./json/tokens.json", async (err, data) => {
     if (err) throw err;
-    else {
-      let tokens = JSON.parse(data);
-      console.log("User List:");
-      tokens.forEach((obj) => {
-        console.log(" * " + obj.username + " : " + obj.token);
-      });
-      myEmitter.emit("log", "token.tokenList", "INFO", "User List: " + tokens);
-    }
+    let tokens = await JSON.parse(data);
+    console.log("User List:");
+    tokens.forEach((obj) => {
+      console.log(" * " + obj.username + " : " + obj.token);
+    });
+    // myEmitter.emit("log", "token.tokenList", "INFO", "User List: " + tokens);
   });
 }
 
@@ -68,7 +56,7 @@ function newToken(args) {
   } else {
     tmpToken = {
       created: date,
-      username: args[0].toString(),
+      username: args[1].toString(),
       password: args[2].toString(),
       email: args[3].toString(),
       phone: args[4].toString(),
