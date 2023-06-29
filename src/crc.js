@@ -83,7 +83,13 @@ function newToken(userName, email, phone) {
   });
 }
 
-newToken("alex", "alex@duck.com", "(709)685-3999");
+function updateToken(argv) {
+  if (DEBUG) console.log("token.updateToken()");
+  if (DEBUG) console.log(argv);
+}
+
+////////////////////////////////////////////////
+// newToken("alex", "alex@duck.com", "(709)685-3999");
 
 module.exports = {
   newToken,
