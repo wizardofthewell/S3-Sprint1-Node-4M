@@ -11,7 +11,7 @@ const tokenApp = async (args) => {
       break;
     case "--new":
     case "-n":
-      token.newToken();
+      token.newToken(args.slice(1));
       break;
     case "--upd":
     case "-u":

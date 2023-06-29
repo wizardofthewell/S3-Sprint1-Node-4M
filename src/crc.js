@@ -48,49 +48,83 @@ function tokenList() {
   });
 }
 
-function newToken(userName, password, email, phone) {
+function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
-  let tkn = crc32(`${userName}#${date}#${email}`).toString(36);
+  let tkn = crc32(
+    `${args[0].toString()}#${date}#${args[0].toString()}`
+  ).toString(36);
   let access = true;
-  let newToken = {
-    created: date,
-    username: userName,
-    password: password,
-    email: email,
-    phone: phone,
-    token: tkn,
-    expires: exp,
-    confirmed: access,
-  };
+  if (args > 0) {
+    newToken = {
+      created: date,
+      username: args[0].toString(),
+      password: args[2].toString(),
+      email: args[3].toString(),
+      phone: args[4].toString(),
+      token: tkn,
+      expires: exp,
+      confirmed: access,
+    };
+  } else {
+    newToken = {
+      created: date,
+      username: "null",
+      password: "null",
+      email: "null",
+      phone: "null",
+      token: tkn,
+      expires: exp,
+      confirmed: false,
+    };
+  }
   // now, i was gonna use listTokens, but they serve different purpose. list posts to console.
   // we need to read to a variable
-  fs.readFile("./json/tokens.json", (err, data) => {
+  fs.readFile("./json/tokens.json", async (err, data) => {
     if (err) {
       console.log(err);
     } else {
-      if (global.DEBUG) {
-        console.log(JSON.parse(data));
-      }
+      // if (global.DEBUG) {
+      //   console.log(JSON.parse(data));
+      // }
       let tokens = JSON.parse(data);
-      tokens.map((token) => {
-        // if token === passed uusername we want to overwrite the users old token
-        if (!token.username === userName) {
-          fs.writeFileSync("./json/tokens.json", token, (err) => {
+      if (tokens.length > 0) {
+        await tokens.forEach((token) => {
+          // if token === passed uusername we want to overwrite the users old token
+          if (!token.username === args[0].toString()) {
+            tokens.push(token);
+          } else {
+            token.created = newToken.date;
+            token.expires = newToken.exp;
+            token.token = newToken.tkn;
+            tokens.push(token);
+          }
+          fs.writeFileSync(
+            "./json/tokens.json",
+            JSON.stringify(tokens),
+            (err) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Token saved successfully.");
+              }
+            }
+          );
+        });
+      } else {
+        fs.writeFileSync(
+          "./json/tokens.json",
+          JSON.stringify(newToken),
+          (err) => {
             if (err) {
               console.log(err);
             } else {
               console.log("Token saved successfully.");
             }
-          });
-        } else {
-          token.created = newToken.date;
-          token.expires = newToken.exp;
-          token.token = newToken.tkn;
-          console.log(token);
-        }
-      });
+          }
+        );
+      }
     }
   });
 }

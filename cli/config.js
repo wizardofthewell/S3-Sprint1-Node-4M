@@ -18,7 +18,7 @@ const configApp = async (myArgs) => {
         fs.mkdirSync("./json");
         console.log("./json created");
       }
-      fs.writeFileSync("./json/tokens.json", "[]");
+      fs.writeFileSync("./json/tokens.json", "{}");
       fs.writeFileSync("./json/users.json", "{}");
       console.log("./json/users.json created");
       console.log("Reset complete.");
