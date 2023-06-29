@@ -17,12 +17,23 @@ const tokenApp = async (args) => {
     case "-l":
       token.tokenList();
       break;
-    case "--upd":
+    case "--update":
     case "-u":
       token.updateToken(args);
       break;
     case "--search":
     case "-s":
+      switch (args[2]) {
+        case "u":
+          token.searchForUser(args);
+          break;
+        case "p":
+          token.searchForPhone(args);
+          break;
+        case "e":
+          token.searchForEmail(args);
+          break;
+      }
       break;
     case "--help":
     case "-h":
