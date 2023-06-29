@@ -74,12 +74,21 @@ function newToken(userName, password, email, phone) {
         console.log(JSON.parse(data));
       }
       let tokens = JSON.parse(data);
-      tokens.push(newToken);
-      fs.writeFile("./json/tokens.json", JSON.stringify(tokens), (err) => {
-        if (err) {
-          console.log(err);
+      tokens.map((token) => {
+        // if token === passed uusername we want to overwrite the users old token
+        if (!token.username === userName) {
+          fs.writeFileSync("./json/tokens.json", token, (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("Token saved successfully.");
+            }
+          });
         } else {
-          console.log("Token saved successfully.");
+          token.created = newToken.date;
+          token.expires = newToken.exp;
+          token.token = newToken.tkn;
+          console.log(token);
         }
       });
     }
@@ -93,12 +102,17 @@ function updateToken(argv) {
     if (err) console.log(err);
     let tokens = await JSON.parse(data);
     if (argv[0]);
+    tokens.forEach((token) => {
+      if (argv[0] === token.username) {
+        console.log(token);
+      }
+    });
   });
 }
 
 ////////////////////////////////////////////////
-// newToken("alex","assweed", "alex@duck.com", "(709)685-3999");
-updateToken(["alex", "password", "sixsinglebird@duck.com", "(709)685-3999"]);
+newToken("alex", "assweed", "alex@duck.com", "(709)685-3999");
+// updateToken(["alex", "password", "sixsinglebird@duck.com", "(709)685-3999"]);
 
 module.exports = {
   newToken,
