@@ -1,7 +1,7 @@
 const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-
+const appStatus = require("./cli/status");
 const configApp = async (myArgs) => {
   switch (myArgs[1]) {
     case "--reset":
@@ -22,6 +22,10 @@ const configApp = async (myArgs) => {
       fs.writeFileSync("./json/users.json", "{}");
       console.log("./json/users.json created");
       console.log("Reset complete.");
+      break;
+    case "--status":
+    case "-s":
+      appStatus();
   }
 };
 
