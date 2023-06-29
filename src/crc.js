@@ -68,7 +68,7 @@ function newToken(userName, email, phone) {
       console.log(err);
     } else {
       let tokens = JSON.parse(data);
-      console.log(data);
+      console.log(JSON.parse(data));
       tokens.push(newToken);
       fs.writeFile("./json/tokens.json", JSON.stringify(tokens), (err) => {
         if (err) {
