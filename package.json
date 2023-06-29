@@ -1,16 +1,16 @@
 {
-	"name": "s3-sprint1-node-4m",
-	"version": "1.0.0",
-	"description": "Project for Sprint 1 in FullStack JS",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"author": "Isaac, Riley, Savanna, Alex",
-	"license": "MIT",
-	"dependencies": {
-		"crc32": "^0.2.2",
-		"date-fns": "~2.30.0",
-		"uuid": "~9.0.0"
-	}
+  "name": "s3-sprint1-node-4m",
+  "version": "1.0.0",
+  "description": "Project for Sprint 1 in FullStack JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Isaac, Riley, Savanna, Alex",
+  "license": "MIT",
+  "dependencies": {
+    "crc32": "~0.2.2",
+    "date-fns": "~2.30.0",
+    "uuid": "~9.0.0"
+  }
 }
