@@ -1,7 +1,7 @@
 const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
-const appStatus = require("./cli/status");
+const { appStatus } = require("./status");
 const configApp = async (myArgs) => {
   switch (myArgs[1]) {
     case "--reset":
