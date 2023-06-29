@@ -8,6 +8,7 @@ const { format, add, parseISO } = require("date-fns");
 ////////////////////////////////////////////////
 // constants
 const myArgs = process.argv.slice(2);
+global.DEBUG = true;
 
 ////////////////////////////////////////////////
 // functions
@@ -47,7 +48,7 @@ function tokenList() {
   });
 }
 
-function newToken(userName, email, phone) {
+function newToken(userName, password, email, phone) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
@@ -56,6 +57,7 @@ function newToken(userName, email, phone) {
   let newToken = {
     created: date,
     username: userName,
+    password: password,
     email: email,
     phone: phone,
     token: tkn,
@@ -85,12 +87,18 @@ function newToken(userName, email, phone) {
 }
 
 function updateToken(argv) {
-  if (DEBUG) console.log("token.updateToken()");
-  if (DEBUG) console.log(argv);
+  if (global.DEBUG) console.log("token.updateToken()");
+  if (global.DEBUG) console.log(argv);
+  fs.readFile("./json/tokens.json", async (err, data) => {
+    if (err) console.log(err);
+    let tokens = await JSON.parse(data);
+    if (argv[0]);
+  });
 }
 
 ////////////////////////////////////////////////
-// newToken("alex", "alex@duck.com", "(709)685-3999");
+// newToken("alex","assweed", "alex@duck.com", "(709)685-3999");
+updateToken(["alex", "password", "sixsinglebird@duck.com", "(709)685-3999"]);
 
 module.exports = {
   newToken,
