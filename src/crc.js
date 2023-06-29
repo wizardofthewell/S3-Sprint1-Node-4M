@@ -51,45 +51,37 @@ function newToken(userName, email, phone) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
-  // has length is set to 36 not 64. would not let me do 64 after.
   let tkn = crc32(`${userName}#${date}#${email}`).toString(36);
   let access = true;
-  let newToken = `{
-    "created": "${date}",
-    "username": "${userName}",
-    "email": "${email}",
-    "phone": "${phone}",
-    "token": "${tkn}",
-    "expires": "${exp}",
-    "confirmed": "${access}"
-},`;
+  let newToken = {
+    created: date,
+    username: userName,
+    email: email,
+    phone: phone,
+    token: tkn,
+    expires: exp,
+    confirmed: access,
+  };
 
-  fs.readFile("./json/token.json", (err, data) => {
+  fs.readFile("./json/tokens.json", (err, data) => {
     if (err) {
       console.log(err);
+    } else {
+      let tokens = JSON.parse(data);
+      console.log(data);
+      tokens.push(newToken);
+      fs.writeFile("./json/tokens.json", JSON.stringify(tokens), (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Token saved successfully.");
+        }
+      });
     }
-    // issue here with JSON.parse. smth w json file starting w/ a u
-    let tokens = JSON.parse(data);
-    tokens.push(newToken);
-    fs.writeFile("./json/tokens.json", newToken, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Token saved successfully.");
-      }
-    });
   });
-
-  // fs.writeFile("./json/tokens.json", newToken, (err) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log("Token saved successfully.");
-  //   }
-  // });
 }
 
-newToken();
+newToken("alex", "alex@duck.com", "(709)685-3999");
 
 module.exports = {
   newToken,
