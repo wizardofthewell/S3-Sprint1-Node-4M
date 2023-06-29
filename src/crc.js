@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const crc32 = require("crc/crc32");
-const { format, add } = require("date-fns");
+const { format, add, parseISO } = require("date-fns");
 
 ////////////////////////////////////////////////
 // constants
@@ -12,9 +12,9 @@ const myArgs = process.argv.slice(2);
 ////////////////////////////////////////////////
 // functions
 var tokenCount = function () {
-  if (DEBUG) console.log("token.tokenCount()");
+  if (global.DEBUG) console.log("token.tokenCount()");
   return new Promise((resolve, reject) => {
-    fs.readFile(path.join(__dirname, "../json/tokens.json"), (err, data) => {
+    fs.readFile(path.join(__dirname, "/json/tokens.json"), (err, data) => {
       if (err) reject(err);
       else {
         let tokens = JSON.parse(data);
@@ -33,8 +33,8 @@ var tokenCount = function () {
 };
 
 function tokenList() {
-  if (DEBUG) console.log("token.tokenList()");
-  fs.readFile(__dirname + "/../json/tokens.json", (err, data) => {
+  if (global.DEBUG) console.log("token.tokenList()");
+  fs.readFile(__dirname + "/json/tokens.json", (err, data) => {
     if (err) throw err;
     else {
       let tokens = JSON.parse(data);
@@ -48,19 +48,51 @@ function tokenList() {
 }
 
 function newToken(userName, email, phone) {
-  if (DEBUG) console.log("token.newToken()");
+  if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
-  let exp = add(date, { days: 1 });
-  let tkn = crc32(`${userName}#${date}#${email}#`).toString(64);
+  let exp = add(parseISO(date), { days: 1 });
+  // has length is set to 36 not 64. would not let me do 64 after.
+  let tkn = crc32(`${userName}#${date}#${email}`).toString(36);
+  let access = true;
+  let newToken = `{
+    "created": "${date}",
+    "username": "${userName}",
+    "email": "${email}",
+    "phone": "${phone}",
+    "token": "${tkn}",
+    "expires": "${exp}",
+    "confirmed": "${access}"
+},`;
 
-  //   what does one mean by confirmed?
-  let newToken = JSON.parse(`{
-    "created": ${date},
-    "username": ${userName},
-    "email": ${email},
-    "phone": ${phone},
-    "token": ${tkn},
-    "expires": ${exp},
-    "confirmed": "tbd"
-}`);
+  fs.readFile("./json/token.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    // issue here with JSON.parse. smth w json file starting w/ a u
+    let tokens = JSON.parse(data);
+    tokens.push(newToken);
+    fs.writeFile("./json/tokens.json", newToken, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Token saved successfully.");
+      }
+    });
+  });
+
+  // fs.writeFile("./json/tokens.json", newToken, (err) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log("Token saved successfully.");
+  //   }
+  // });
 }
+
+newToken();
+
+module.exports = {
+  newToken,
+  tokenCount,
+  tokenList,
+};

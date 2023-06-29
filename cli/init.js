@@ -8,11 +8,25 @@ const initializeApp = async () => {
     console.log("Logs directory exists.");
   } else {
     fs.mkdirSync("./src/logs");
+    console.log("./src/logs created");
   }
   if (fs.existsSync("./json")) {
-    console.log("Logs directory exists.");
+    console.log("Json directory exists.");
   } else {
     fs.mkdirSync("./json");
+    console.log("./json created");
+  }
+  // i added this becase
+  if (fs.existsSync("./json/tokens.json")) {
+    console.log("tokens file exists.");
+  } else {
+    fs.writeFile("./json/tokens.json", "", (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("./json/tokens.json created");
+      }
+    });
   }
   console.log("Initialization complete.");
 };

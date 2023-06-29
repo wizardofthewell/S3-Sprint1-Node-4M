@@ -9,6 +9,7 @@
   "author": "Isaac, Riley, Savanna, Alex",
   "license": "MIT",
   "dependencies": {
+    "crc": "~4.3.2",
     "crc32": "~0.2.2",
     "date-fns": "~2.30.0",
     "uuid": "~9.0.0"
