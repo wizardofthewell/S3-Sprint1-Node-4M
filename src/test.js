@@ -1,58 +1,38 @@
-// define/extend an EventEmitter class
-// const EventEmitter = require("events");
-// class MyEmitter extends EventEmitter {}
-
-// initialize an new emitter object
-// const myEmitter = new MyEmitter();
-// add the listener for the logEvent
-// myEmitter.on("log", (event, level, msg) => logEvents(event, level, msg));
-
-// Node.js common core global modules
-const fs = require("fs");
-const path = require("path");
-
-const crc32 = require("crc/crc32");
-const { format, addDays } = require("date-fns");
-
-function newToken(username) {
-  if (global.DEBUG) console.log("token.newToken()");
-  let newToken = JSON.parse(`{
-        "created": "1969-01-31 12:30:00",
-        "username": "username",
-        "email": "user@example.com",
-        "phone": "5556597890",
-        "token": "token",
-        "expires": "1969-02-03 12:30:00",
-        "confirmed": "tbd"
-    }`);
-
-  let now = new Date();
-  let expires = addDays(now, 3);
-
-  newToken.created = `${format(now, "yyyy-MM-dd HH:mm:ss")}`;
-  newToken.username = username;
-  newToken.token = crc32(username).toString(16);
-  newToken.expires = `${format(expires, "yyyy-MM-dd HH:mm:ss")}`;
-
-  fs.readFile(__dirname + "../json/tokens.json", "utf-8", (error, data) => {
+function updateToken(argv) {
+  if (DEBUG) console.log("token.updateToken()");
+  if (DEBUG) console.log(argv);
+  fs.readFile(__dirname + "/json/tokens.json", "utf-8", (error, data) => {
     if (error) throw error;
     let tokens = JSON.parse(data);
-    tokens.push(newToken);
+    tokens.forEach((obj) => {
+      if (obj.username === argv[3]) {
+        if (DEBUG) console.log(obj);
+        switch (argv[2]) {
+          case "p":
+          case "P":
+            obj.phone = argv[4];
+            break;
+          case "e":
+          case "E":
+            obj.email = argv[4];
+            break;
+          default:
+        }
+        if (DEBUG) console.log(obj);
+      }
+    });
     userTokens = JSON.stringify(tokens);
-
-    fs.writeFile(__dirname + "../json/tokens.json", userTokens, (err) => {
+    fs.writeFile(__dirname + "/json/tokens.json", userTokens, (err) => {
       if (err) console.log(err);
       else {
-        console.log(`New token ${newToken.token} was created for ${username}.`);
-        // myEmitter.emit(
-        //   "log",
-        //   "token.newToken()",
-        //   "INFO",
-        //   `New token ${newToken.token} was created for ${username}.`
-        // );
+        console.log(`Token record for ${argv[3]} was updated with ${argv[4]}.`);
+        myEmitter.emit(
+          "log",
+          "token.updateToken()",
+          "INFO",
+          `Token record for ${argv[3]} was updated with ${argv[4]}.`
+        );
       }
     });
   });
-  return newToken.token;
 }
-newToken("username");
