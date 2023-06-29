@@ -1,6 +1,7 @@
 const { exec } = require("child_process");
 const fs = require("fs");
 const path = require("path");
+
 const initializeApp = async () => {
   console.log("Initializing...");
   await exec("npm install");
@@ -19,7 +20,7 @@ const initializeApp = async () => {
   if (fs.existsSync("./json/tokens.json")) {
     console.log("Tokens file exists.");
   } else {
-    fs.writeFileSync("./json/tokens.json", "[]");
+    fs.writeFileSync("./json/tokens.json", "{}");
     console.log("./json/tokens.json created");
   }
   console.log("Initialization complete.");

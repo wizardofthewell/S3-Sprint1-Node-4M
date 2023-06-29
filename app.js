@@ -4,6 +4,8 @@ const server = require("./src/server");
 const fs = require("fs");
 const { initializeApp } = require("./cli/init");
 const { configApp } = require("./cli/config");
+const { tokenApp } = require("./cli/token");
+
 ////////////////////////////////////////////////
 // globals
 global.DEBUG = true;
@@ -18,36 +20,43 @@ if (DEBUG) if (myArgs.length >= 1) console.log("the myapp.args: ", myArgs);
 
 switch (myArgs[0]) {
   case "init":
-  case "i":
+  case "i": {
     if (DEBUG) console.log(myArgs[0], " - initialize the app.");
     initializeApp(myArgs[1]);
     break;
+  }
   case "config":
-  case "c":
+  case "c": {
     if (DEBUG) console.log(myArgs[1], " - reset the app config.");
     configApp(myArgs);
     break;
+  }
   case "token":
-  case "t":
+  case "t": {
     if (DEBUG) console.log(myArgs[0], " - generate a user token");
-    tokenApp(myArgs[1]);
+    tokenApp(myArgs);
     break;
+  }
   case "--help":
-  case "--h":
+  case "--h": {
     fs.readFile(__dirname + "/usage.txt", (error, data) => {
       if (error) throw error;
       console.log(data.toString());
     });
     break;
+  }
   case "s":
-  case "start":
+  case "start": {
     if (DEBUG) console.log(myArgs[0], " - start the app.");
     server.start();
     break;
-  default:
+  }
+  default: {
     fs.readFile(__dirname + "/usage.txt", (error, data) => {
       if (error) throw error;
       console.log(data.toString());
       // server.start();
     });
+    break;
+  }
 }

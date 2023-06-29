@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const { appStatus } = require("./status");
 const configApp = async (myArgs) => {
-  switch (myArgs[1]) {
+  switch (myArgs) {
     case "--reset":
     case "-r":
       if (fs.existsSync("./src/logs")) {
@@ -26,6 +26,9 @@ const configApp = async (myArgs) => {
     case "--status":
     case "-s":
       appStatus();
+      break;
+    default:
+      console.log("fart stink butt");
   }
 };
 

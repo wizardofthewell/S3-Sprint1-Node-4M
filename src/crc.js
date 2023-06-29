@@ -101,9 +101,9 @@ function updateToken(argv) {
   fs.readFile("./json/tokens.json", async (err, data) => {
     if (err) console.log(err);
     let tokens = await JSON.parse(data);
-    if (argv[0]);
+    if (argv[2]);
     tokens.forEach((token) => {
-      if (argv[0] === token.username) {
+      if (argv[2] === token.username) {
         console.log(token);
       }
     });
@@ -111,11 +111,12 @@ function updateToken(argv) {
 }
 
 ////////////////////////////////////////////////
-newToken("alex", "assweed", "alex@duck.com", "(709)685-3999");
+// newToken("alex", "assweed", "alex@duck.com", "(709)685-3999");
 // updateToken(["alex", "password", "sixsinglebird@duck.com", "(709)685-3999"]);
 
 module.exports = {
   newToken,
   tokenCount,
   tokenList,
+  updateToken,
 };
