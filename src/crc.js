@@ -83,6 +83,31 @@ function newToken(args) {
 
 function updateToken(args) {
   if (global.DEBUG) console.log("token.updateToken()");
+  if (global.DEBUG) console.log(args);
+  // fs.readFile("./json/tokens.json", async (err, data) => {
+  //   if (err) console.log(err);
+  //   let tokens = await JSON.parse(data);
+  //   let tmpTokens = [];
+  //   let date = format(new Date(), "y-MM-dd HH:mm.ss");
+  //   let exp = add(parseISO(date), { days: 1 });
+  //   tokens.forEach((token) => {
+  //     if (args[3] === token.username) {
+  //       token.created(date);
+  //       token.token(crc32(`${access}#${date}#${exp}`).toString(36));
+  //       token.expires(exp);
+  //       tmpTokens.push(token);
+  //     } else {
+  //       tmpTokens.push(token);
+  //     }
+  //   });
+  //   fs.writeFile("./json/tokens.json", JSON.stringify(tmpTokens), (err) => {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       console.log("Tokens saved successfully.");
+  //     }
+  //   });
+  // });
 }
 
 function searchForUser(args) {

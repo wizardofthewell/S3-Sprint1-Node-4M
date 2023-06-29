@@ -1,9 +1,9 @@
 const { exec } = require("child_process");
 const fs = require("fs");
-const path = require("path");
 const { appStatus } = require("./status");
+
 const configApp = async (myArgs) => {
-  switch (myArgs) {
+  switch (myArgs[1]) {
     case "--reset":
     case "-r":
       if (fs.existsSync("./src/logs")) {
@@ -26,6 +26,11 @@ const configApp = async (myArgs) => {
     case "--status":
     case "-s":
       appStatus();
+      break;
+    // global does not work this way sadly
+    case "--debug":
+    case "-d":
+      global.DEBUG = !global.DEBUG;
       break;
     default:
       console.log("fart stink butt");
