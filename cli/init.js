@@ -1,6 +1,6 @@
 const { exec } = require("child_process");
 const fs = require("fs");
-
+const path = require("path");
 const initializeApp = async () => {
   console.log("Initializing...");
   await exec("npm install");

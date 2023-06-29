@@ -3,6 +3,7 @@
 const server = require("./src/server");
 const fs = require("fs");
 const { initializeApp } = require("./cli/init");
+const { configApp } = require("./cli/config");
 ////////////////////////////////////////////////
 // globals
 global.DEBUG = true;
@@ -23,8 +24,8 @@ switch (myArgs[0]) {
     break;
   case "config":
   case "c":
-    if (DEBUG) console.log(myArgs[0], " - display the configuration file");
-    configApp(myArgs[1]);
+    if (DEBUG) console.log(myArgs[1], " - reset the app config.");
+    configApp(myArgs);
     break;
   case "token":
   case "t":
