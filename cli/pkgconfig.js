@@ -43,7 +43,7 @@ function updatePKGConfigFile() {
 }
 function resetPKGConfigFile() {
   try {
-    const packageJsonPath = "./package.json";
+    const packageJsonPath = "./package-lock.json";
 
     const packageDefaultJsonContent = JSON.parse(
       fs.readFileSync("./json/defaultpkglck.json", "utf8")

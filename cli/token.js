@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////
 // imports
 const token = require("../src/crc");
-
+const { getUsers } = require("../src/searchUser");
 ////////////////////////////////////////////////
 const tokenApp = async (args) => {
   switch (args[1]) {
@@ -25,7 +25,7 @@ const tokenApp = async (args) => {
     case "-s":
       switch (args[2]) {
         case "u":
-          token.searchForUser(args);
+          getUsers(args[3]);
           break;
         case "p":
           token.searchForPhone(args);
