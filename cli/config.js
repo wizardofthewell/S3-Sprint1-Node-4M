@@ -1,7 +1,11 @@
+////////////////////////////////////////////////
+// imports
 const { exec } = require("child_process");
 const fs = require("fs");
 const { appStatus } = require("./status");
 const { resetApp } = require("./reset");
+
+////////////////////////////////////////////////
 const configApp = async (myArgs) => {
   switch (myArgs[1]) {
     case "--reset":

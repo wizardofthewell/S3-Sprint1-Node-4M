@@ -16,7 +16,10 @@ const resetApp = async () => {
   }
   fs.writeFileSync("./json/tokens.json", "{}");
   fs.writeFileSync("./json/users.json", "{}");
-  console.log("./json/users.json created");
+  fs.writeFileSync("./json/config.json", "{}");
+  console.log("./json/tokens.json reset");
+  console.log("./json/config.json reset");
+  console.log("./json/users.json reset");
   console.log("Reset complete.");
 };
 

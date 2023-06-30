@@ -22,6 +22,18 @@ const initializeApp = async () => {
     fs.writeFileSync("./json/tokens.json", "[]");
     console.log("./json/tokens.json created");
   }
+  if (fs.existsSync("./json/users.json")) {
+    console.log("Tokens file exists.");
+  } else {
+    fs.writeFileSync("./json/users.json", "[]");
+    console.log("./json/tokens.json created");
+  }
+  if (fs.existsSync("./json/config.json")) {
+    console.log("Tokens file exists.");
+  } else {
+    fs.writeFileSync("./json/config.json", "[]");
+    console.log("./json/tokens.json created");
+  }
   console.log("Initialization complete.");
 };
 
