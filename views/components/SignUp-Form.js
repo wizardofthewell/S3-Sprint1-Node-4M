@@ -10,6 +10,10 @@ const form = () => {
     <input type="email" id="email" name="email" required>
   </div>
   <div class="form">
+    <label for="phone">Phone:</label>
+    <input type="phone" id="phone" name="phone" required>
+  </div>
+  <div class="form">
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required>
   </div>
