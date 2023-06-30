@@ -1,24 +1,14 @@
 const fs = require("fs");
 
-function handleInput(input) {
-  if (input === "view-config") {
-    viewConfigFiles();
-  } else if (input === "update-config") {
-    updateConfigFile();
-  } else {
-    console.log("Incorrect command");
-  }
-}
-
-function viewConfigFiles() {
+function viewPKGConfigFiles() {
   try {
     // Read package-lock.json file
-    const packageLockContent = fs.readFileSync("package-lock.json", "utf8");
+    const packageLockContent = fs.readFileSync("./package-lock.json", "utf8");
     console.log("package-lock.json:");
     console.log(packageLockContent);
 
     // Read package.json file
-    const packageJsonContent = fs.readFileSync("package.json", "utf8");
+    const packageJsonContent = fs.readFileSync("./package.json", "utf8");
     console.log("package.json:");
     console.log(packageJsonContent);
   } catch (error) {
@@ -26,13 +16,13 @@ function viewConfigFiles() {
   }
 }
 
-function updateConfigFile() {
+function updatePKGConfigFile() {
   try {
     // Update package.json file
     const newConfig = {
       key: "value",
     };
-    const packageJsonPath = "package.json";
+    const packageJsonPath = "./package.json";
     const packageJsonContent = JSON.parse(
       fs.readFileSync(packageJsonPath, "utf8")
     );
@@ -51,7 +41,28 @@ function updateConfigFile() {
     console.error("Unable to update config file:", error);
   }
 }
+function resetPKGConfigFile() {
+  try {
+    const packageJsonPath = "./package-lock.json";
 
-handleInput("view-config");
-handleInput("update-config");
-handleInput("view-config");
+    const packageDefaultJsonContent = JSON.parse(
+      fs.readFileSync("./json/defaultpkglck.json", "utf8")
+    );
+    const updatedPackageJsonContent = {
+      packageDefaultJsonContent,
+    };
+    fs.writeFileSync(
+      packageJsonPath,
+      JSON.stringify(updatedPackageJsonContent, null, 2),
+      "utf8"
+    );
+  } catch (error) {
+    console.error("Unable to reset config file:", error);
+  }
+}
+
+module.exports = {
+  viewPKGConfigFiles,
+  updatePKGConfigFile,
+  resetPKGConfigFile,
+};
