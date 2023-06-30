@@ -1,0 +1,22 @@
+app <command> <option>
+
+Usage:
+
+app --help                            displays help
+app init --all                        creates the folder structure and config file
+app init --mk                         creates the folder structure
+app init --cat                        creates the config file with default settings
+app init --help
+app config --status                    displays a list of the current config settings
+app config --reset                    resets the config file with default settings
+app config --set                      sets a specific config setting
+app config --help
+app token --count                     displays a count of the tokens created
+app token --new <username>            generates a token for a given username, saves tokens to the json file
+app token --upd p <username> <phone>  updates the json entry with phone number
+app token --upd e <username> <email>  updates the json entry with email
+app token --search u <username>       fetches a token for a given username
+app token --search e <email>          fetches a token for a given email
+app token --search p <phone>          fetches a token for a given phone number
+app token --help
+app start                             starts the webserver application

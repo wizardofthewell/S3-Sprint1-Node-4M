@@ -50,6 +50,18 @@ const styleSheet = (response) => {
   });
 };
 
+const favicon = (response) => {
+  fs.readFile("favicon.ico", (err, data) => {
+    if (err) {
+      console.log(err);
+      response.writeHead(404, { "Content-Type": "text/plain" });
+      response.end("File not found");
+    } else {
+    }
+    response.writeHead(200, { "Content-Type": "image/x-icon" });
+    response.end(data);
+  });
+};
 ////////////////////////////////////////////////
 // listener
 emitEvent.on("log", (event, level, message) => {
@@ -64,4 +76,5 @@ module.exports = {
   styleSheet,
   loginPage,
   signUpPage,
+  favicon,
 };
