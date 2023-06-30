@@ -41,10 +41,10 @@ async function readConfig() {
 async function main() {
   let config = await readConfig();
   // console.log(config.debug);
-  if (config.debug === "true") {
+  if (config.debug == true) {
     global.DEBUG = true;
   }
-  if (config.debug === "false") {
+  if (config.debug == false) {
     global.DEBUG = false;
   } else {
     console.log("DEBUG is not set in config.json");
@@ -57,7 +57,7 @@ async function main() {
     case "init":
     case "i": {
       if (global.DEBUG) console.log(myArgs[0], " - initialize the app.");
-      initializeApp(myArgs[1]);
+      initializeApp(myArgs);
       break;
     }
     case "config":
