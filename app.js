@@ -12,11 +12,6 @@ global.STYLE = '<link rel="stylesheet" href="/views/files/style.css" />';
 global.NAV =
   '<nav><a href="/login">Login</a><a href="/signup">Sign-Up<a></nav>';
 // global.DEBUG = readConfig().debug;
-let debugval;
-readConfig().then(async (data) => {
-  debugval = await data.JSON;
-});
-console.log(debugval);
 ////////////////////////////////////////////////
 // functions
 function readFileAsync(path) {
@@ -43,49 +38,62 @@ async function readConfig() {
 
 ////////////////////////////////////////////////
 // switch and logic
-const myArgs = process.argv.slice(2);
-if (global.DEBUG)
-  if (myArgs.length >= 1) console.log("the myapp.args: ", myArgs);
+async function main() {
+  let config = await readConfig();
+  // console.log(config.debug);
+  if (config.debug === "true") {
+    global.DEBUG = true;
+  }
+  if (config.debug === "false") {
+    global.DEBUG = false;
+  } else {
+    console.log("DEBUG is not set in config.json");
+  }
+  const myArgs = process.argv.slice(2);
+  if (global.DEBUG)
+    if (myArgs.length >= 1) console.log("the myapp.args: ", myArgs);
 
-switch (myArgs[0]) {
-  case "init":
-  case "i": {
-    if (global.DEBUG) console.log(myArgs[0], " - initialize the app.");
-    initializeApp(myArgs[1]);
-    break;
-  }
-  case "config":
-  case "c": {
-    if (global.DEBUG) console.log(myArgs[1], " - reset the app config.");
-    configApp(myArgs);
-    break;
-  }
-  case "token":
-  case "t": {
-    if (global.DEBUG) console.log(myArgs[0], " - generate a user token");
-    tokenApp(myArgs);
-    break;
-  }
-  case "--help":
-  case "--h": {
-    fs.readFile(__dirname + "/usage.txt", (error, data) => {
-      if (error) throw error;
-      console.log(data.toString());
-    });
-    break;
-  }
-  case "s":
-  case "start": {
-    if (global.DEBUG) console.log(myArgs[0], " - start the app.");
-    server.start();
-    break;
-  }
-  default: {
-    fs.readFile(__dirname + "/usage.txt", (error, data) => {
-      if (error) throw error;
-      console.log(data.toString());
-      // server.start();
-    });
-    break;
+  switch (myArgs[0]) {
+    case "init":
+    case "i": {
+      if (global.DEBUG) console.log(myArgs[0], " - initialize the app.");
+      initializeApp(myArgs[1]);
+      break;
+    }
+    case "config":
+    case "c": {
+      if (global.DEBUG) console.log(myArgs[1], " - reset the app config.");
+      configApp(myArgs);
+      break;
+    }
+    case "token":
+    case "t": {
+      if (global.DEBUG) console.log(myArgs[0], " - generate a user token");
+      tokenApp(myArgs);
+      break;
+    }
+    case "--help":
+    case "--h": {
+      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+      break;
+    }
+    case "s":
+    case "start": {
+      if (global.DEBUG) console.log(myArgs[0], " - start the app.");
+      server.start();
+      break;
+    }
+    default: {
+      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+        // server.start();
+      });
+      break;
+    }
   }
 }
+main();
