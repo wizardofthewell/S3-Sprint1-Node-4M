@@ -6,7 +6,7 @@ const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
-const tokenApp = require("crc");
+const tokenApp = require("./crc");
 
 ////////////////////////////////////////////////
 // constant
@@ -34,6 +34,7 @@ const serverSwitch = http.createServer(async (req, response) => {
         `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
       await router.loginPage(response);
+      await tokenApp.newToken();
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 

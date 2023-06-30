@@ -6,7 +6,6 @@ const signUp = require("../views/signUp");
 const logger = require("./logger");
 const tokenApp = require("./crc");
 const events = require("events");
-const { format } = require("date-fns");
 class Event extends events {}
 const emitEvent = new Event();
 const fs = require("fs");
@@ -62,7 +61,7 @@ const loggedIn = (response, req) => {
     body += data;
   });
 
-  req.on("end", () => {
+  req.on("end", async () => {
     // Parse the form data
     const formData = new URLSearchParams(body);
 
@@ -71,7 +70,7 @@ const loggedIn = (response, req) => {
     const password = formData.get("password");
 
     // Do something with the username and password
-    validate([username, password]);
+    await validate({ user: username, password: password });
 
     // Send a response back to the client
     response.statusCode = 200;
@@ -107,12 +106,18 @@ async function validate(args) {
     if (err) console.log(err);
     let tokens = await JSON.parse(data);
     await tokens.forEach(async (token) => {
-      if (args[0] === token.username) {
-        if (args[1] === token.password) {
-          await tokenApp.updateToken(args);
-          index.page();
-        }
-      }
+      // console.log("stink fart", args);
+      tokenApp.newToken(args);
+
+      // if (args[0] === token.username && args[1] === token.password) {
+      //   console.log(args);
+      //   await tokenApp.updateToken(args);
+      //   index.page();
+      // } else {
+      //   console.log(args);
+      //   tokenApp.newToken();
+      //   login.page();
+      // }
     });
   });
 

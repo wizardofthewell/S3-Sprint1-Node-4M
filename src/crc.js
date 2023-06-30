@@ -30,13 +30,14 @@ function tokenList() {
   });
 }
 
-async function newToken(args) {
+async function newToken(...args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
   let access = false;
   let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
-  if (args.length != 5) {
+  console.log(args.length);
+  if (args.length === 0) {
     tmpToken = {
       created: date,
       username: "null",
@@ -47,24 +48,26 @@ async function newToken(args) {
       expires: exp,
       confirmed: access,
     };
-  } else if (args.length === 2) {
+  }
+  if (args.length === 1) {
     tmpToken = {
       created: date,
-      username: args[0],
-      password: args[1],
+      username: args[0][0],
+      password: args[0][1],
       email: "null",
       phone: "null",
       token: tkn,
       expires: exp,
       confirmed: access,
     };
-  } else {
+  }
+  if (args.length === 5) {
     tmpToken = {
       created: date,
-      username: args[1].toString(),
-      password: args[2].toString(),
-      email: args[3].toString(),
-      phone: args[4].toString(),
+      username: args[1],
+      password: args[2],
+      email: args[3],
+      phone: args[4],
       token: tkn,
       expires: exp,
       confirmed: access,
@@ -99,11 +102,10 @@ async function newToken(args) {
 async function updateToken(args) {
   if (global.DEBUG) console.log("token.updateToken()");
   if (global.DEBUG) console.log(args);
-
   fs.writeFile(
     "./json/tokens.json",
     JSON.stringify(await newToken(args)),
-    (err) => {
+    async (err) => {
       if (err) {
         console.log(err);
       } else {
