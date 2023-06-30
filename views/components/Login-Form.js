@@ -1,5 +1,9 @@
+////////////////////////////////////////////////
+// imports
+
+////////////////////////////////////////////////
 const form = () => {
-  return `<form class="form" method="post" action="/login">
+  return `<form id="login-form" class="form" method="post" action="/views/components/Login-Form.js">
   <h2 class="title">Login</h2>
   <div class="form">
     <label for="username">Username:</label>
@@ -15,5 +19,7 @@ const form = () => {
 </form>
 `;
 };
-
+{
+  /* <script src="./views/components/Login-Form.js"></script> */
+}
 module.exports = { form };

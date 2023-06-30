@@ -36,7 +36,7 @@ const notFoundPage = (response) => {
 };
 
 ////////////////////////////////////////////////
-// serve style file
+// functionality paths
 const styleSheet = (response) => {
   fs.readFile("./views/files/style.css", (err, data) => {
     if (err) {
@@ -48,6 +48,10 @@ const styleSheet = (response) => {
     response.writeHead(200, { "Content-Type": "text/css" });
     response.end(data);
   });
+};
+
+const userLogin = (response) => {
+  console.log("stinky poo fart");
 };
 
 const favicon = (response) => {
@@ -77,4 +81,5 @@ module.exports = {
   loginPage,
   signUpPage,
   favicon,
+  userLogin,
 };
