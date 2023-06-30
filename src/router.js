@@ -15,6 +15,7 @@ const indexPage = (response) => {
   if (global.DEBUG) console.log("Index page requested");
   response.statusCode = 200;
   index.page(response);
+  console.log("stinky fart");
 };
 
 const loginPage = (response) => {
@@ -50,10 +51,6 @@ const styleSheet = (response) => {
   });
 };
 
-const userLogin = (response) => {
-  console.log("stinky poo fart");
-};
-
 const favicon = (response) => {
   fs.readFile("favicon.ico", (err, data) => {
     if (err) {
@@ -81,5 +78,4 @@ module.exports = {
   loginPage,
   signUpPage,
   favicon,
-  userLogin,
 };

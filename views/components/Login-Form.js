@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////
 const form = () => {
-  return `<form id="login-form" class="form" method="post" action="/views/components/Login-Form.js">
+  return `<form id="login-form" class="form" method="post" action="/">
   <h2 class="title">Login</h2>
   <div class="form">
     <label for="username">Username:</label>

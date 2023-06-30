@@ -6,6 +6,7 @@ const logger = require("./logger");
 const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
+const tokenApp = require("crc");
 
 ////////////////////////////////////////////////
 // constant
@@ -28,20 +29,14 @@ const serverSwitch = http.createServer(async (req, res) => {
 
     case "/login":
       res.statusCode = 100;
-      res.setHeader(
-        "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
-      );
+
       await router.loginPage(res);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
     case "/signup":
       res.statusCode = 100;
-      res.setHeader(
-        "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
-      );
+
       await router.signUpPage(res);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
@@ -56,13 +51,11 @@ const serverSwitch = http.createServer(async (req, res) => {
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
-    case "/views/components/Login-Form.js":
-      res.statusCode = 100;
       res.setHeader(
         "Set-Cookie",
         "cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}"
       );
-      await router.userLogin();
+      await router.userLogin(res);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 

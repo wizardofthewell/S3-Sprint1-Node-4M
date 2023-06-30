@@ -36,7 +36,7 @@ function newToken(args) {
   let exp = add(parseISO(date), { days: 1 });
   let access = true;
   let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
-  if (args.length <= 2) {
+  if (args.length != 5) {
     tmpToken = {
       created: date,
       username: "null",
