@@ -14,68 +14,72 @@ const cookieExp = new Date(Date.now() + 86400000);
 
 ////////////////////////////////////////////////
 // server
-const serverSwitch = http.createServer(async (req, res) => {
+const serverSwitch = http.createServer(async (req, response) => {
   // router switch
   switch (req.url) {
     case "/":
-      res.statusCode = 100;
-      res.setHeader(
+      response.statusCode = 100;
+      response.setHeader(
         "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+        `cookiename=server${req.url}cookie; Expirespons=${cookieExp}; Path=${req.url}`
       );
-      await router.indexPage(res);
+      await router.indexPage(response);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
     case "/login":
-      res.statusCode = 100;
-
-      await router.loginPage(res);
+      response.statusCode = 100;
+      response.setHeader(
+        "Set-Cookie",
+        `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
+      );
+      await router.loginPage(response);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
-    case "/signup":
-      res.statusCode = 100;
+    case "/userLogin":
+      response.statusCode = 100;
+      await router.loggedIn(response, req);
+      emitEvent.emit("log", "server", "ACTION", `${req.url} visited`);
+      break;
 
-      await router.signUpPage(res);
+    case "/signup":
+      response.statusCode = 100;
+      response.setHeader(
+        "Set-Cookie",
+        `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
+      );
+      await router.signUpPage(response);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
     case "/favicon.ico":
-      res.statusCode = 100;
-      res.setHeader(
+      response.statusCode = 100;
+      response.setHeader(
         "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+        `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
-      await router.favicon(res);
-      emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
-      break;
-
-      res.setHeader(
-        "Set-Cookie",
-        "cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}"
-      );
-      await router.userLogin(res);
+      await router.favicon(response);
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
     case "/views/files/style.css":
-      res.statusCode = 100;
-      res.setHeader(
+      response.statusCode = 100;
+      response.setHeader(
         "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+        `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
-      router.styleSheet(res);
+      router.styleSheet(response);
       emitEvent.emit("log", "server", "STYLE", `${req.url} visited`);
       break;
 
     default:
-      res.statusCode = 404;
-      res.setHeader(
+      response.statusCode = 404;
+      response.setHeader(
         "Set-Cookie",
-        `cookiename=server${req.url}cookie; Expires=${cookieExp}; Path=${req.url}`
+        `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
-      router.notFoundPage(res);
+      router.notFoundPage(response);
       emitEvent.emit(
         "log",
         "server",

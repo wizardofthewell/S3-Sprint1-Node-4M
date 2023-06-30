@@ -4,7 +4,9 @@ const index = require("../views/index");
 const login = require("../views/login");
 const signUp = require("../views/signUp");
 const logger = require("./logger");
+const tokenApp = require("./crc");
 const events = require("events");
+const { format } = require("date-fns");
 class Event extends events {}
 const emitEvent = new Event();
 const fs = require("fs");
@@ -51,6 +53,34 @@ const styleSheet = (response) => {
   });
 };
 
+const loggedIn = (response, req) => {
+  if (global.DEBUG) console.log("User Login requested");
+  let body = "";
+  response.statusCode = 200;
+
+  req.on("data", (data) => {
+    body += data;
+  });
+
+  req.on("end", () => {
+    // Parse the form data
+    const formData = new URLSearchParams(body);
+
+    // Access values from named elements
+    const username = formData.get("username");
+    const password = formData.get("password");
+
+    // Do something with the username and password
+    validate([username, password]);
+
+    // Send a response back to the client
+    response.statusCode = 200;
+    // response.setHeader("Content-Type", "text/plain");
+    response.end("Form submitted successfully");
+  });
+  index.page(response);
+};
+
 const favicon = (response) => {
   fs.readFile("favicon.ico", (err, data) => {
     if (err) {
@@ -70,6 +100,27 @@ emitEvent.on("log", (event, level, message) => {
 });
 
 ////////////////////////////////////////////////
+// main
+
+async function validate(args) {
+  fs.readFile("./json/tokens.json", async (err, data) => {
+    if (err) console.log(err);
+    let tokens = await JSON.parse(data);
+    await tokens.forEach(async (token) => {
+      if (args[0] === token.username) {
+        if (args[1] === token.password) {
+          await tokenApp.updateToken(args);
+          index.page();
+        }
+      }
+    });
+  });
+
+  // console.log(username, password);
+  // await fs.writeFileSync("./json/users.json", JSON.stringify(config, null, 2));
+}
+
+////////////////////////////////////////////////
 // export
 module.exports = {
   indexPage,
@@ -78,4 +129,5 @@ module.exports = {
   loginPage,
   signUpPage,
   favicon,
+  loggedIn,
 };

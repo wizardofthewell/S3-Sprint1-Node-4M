@@ -30,17 +30,28 @@ function tokenList() {
   });
 }
 
-function newToken(args) {
+async function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
-  let access = true;
+  let access = false;
   let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
   if (args.length != 5) {
     tmpToken = {
       created: date,
       username: "null",
       password: "null",
+      email: "null",
+      phone: "null",
+      token: tkn,
+      expires: exp,
+      confirmed: access,
+    };
+  } else if (args.length === 2) {
+    tmpToken = {
+      created: date,
+      username: args[0],
+      password: args[1],
       email: "null",
       phone: "null",
       token: tkn,
@@ -61,55 +72,46 @@ function newToken(args) {
   }
 
   try {
-    fs.readFile("./json/tokens.json", async (error, data) => {
+    await fs.readFile("./json/tokens.json", async (error, data) => {
       if (error) console.log(error);
       let tokens = await JSON.parse(data);
       if (!Array.isArray(tokens)) {
         tokens = [];
       }
       tokens.push(tmpToken);
-      fs.writeFile("./json/tokens.json", JSON.stringify(tokens), (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Token saved successfully.");
+      await fs.writeFile(
+        "./json/tokens.json",
+        JSON.stringify(tokens),
+        (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Token saved successfully.");
+          }
         }
-      });
+      );
     });
   } catch (err) {
     console.log(err);
   }
 }
 
-function updateToken(args) {
+async function updateToken(args) {
   if (global.DEBUG) console.log("token.updateToken()");
   if (global.DEBUG) console.log(args);
-  // fs.readFile("./json/tokens.json", async (err, data) => {
-  //   if (err) console.log(err);
-  //   let tokens = await JSON.parse(data);
-  //   let tmpTokens = [];
-  //   let date = format(new Date(), "y-MM-dd HH:mm.ss");
-  //   let exp = add(parseISO(date), { days: 1 });
-  //   tokens.forEach((token) => {
-  //     if (args[3] === token.username) {
-  //       token.created(date);
-  //       token.token(crc32(`${access}#${date}#${exp}`).toString(36));
-  //       token.expires(exp);
-  //       tmpTokens.push(token);
-  //     } else {
-  //       tmpTokens.push(token);
-  //     }
-  //   });
-  //   fs.writeFile("./json/tokens.json", JSON.stringify(tmpTokens), (err) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       console.log("Tokens saved successfully.");
-  //     }
-  //   });
-  // });
-}
 
+  fs.writeFile(
+    "./json/tokens.json",
+    JSON.stringify(await newToken(args)),
+    (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Tokens saved successfully.");
+      }
+    }
+  );
+}
 function searchForUser(args) {
   if (global.DEBUG) console.log("token.searchForUser()");
   if (global.DEBUG) console.log(args);
@@ -119,6 +121,7 @@ function searchForUser(args) {
     tokens.forEach((token) => {
       if (args[3] === token.username) {
         console.log(token);
+        return token;
       }
     });
   });
