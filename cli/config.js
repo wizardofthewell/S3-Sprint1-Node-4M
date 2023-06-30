@@ -4,7 +4,6 @@ const { exec } = require("child_process");
 const fs = require("fs");
 const { appStatus } = require("./status");
 const { resetApp } = require("./reset");
-
 ////////////////////////////////////////////////
 const configApp = async (myArgs) => {
   switch (myArgs[1]) {
@@ -21,7 +20,11 @@ const configApp = async (myArgs) => {
       global.DEBUG = !global.DEBUG;
       break;
     default:
-      console.log("fart stink butt");
+      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+      break;
   }
 };
 

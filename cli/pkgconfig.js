@@ -1,16 +1,6 @@
 const fs = require("fs");
 
-function handleInput(input) {
-  if (input === "view-config") {
-    viewConfigFiles();
-  } else if (input === "update-config") {
-    updateConfigFile();
-  } else {
-    console.log("Incorrect command");
-  }
-}
-
-function viewConfigFiles() {
+function viewPKGConfigFiles() {
   try {
     // Read package-lock.json file
     const packageLockContent = fs.readFileSync("package-lock.json", "utf8");
@@ -26,7 +16,7 @@ function viewConfigFiles() {
   }
 }
 
-function updateConfigFile() {
+function updatePKGConfigFile() {
   try {
     // Update package.json file
     const newConfig = {
@@ -52,6 +42,7 @@ function updateConfigFile() {
   }
 }
 
-handleInput("view-config");
-handleInput("update-config");
-handleInput("view-config");
+module.exports = {
+  viewPKGConfigFiles,
+  updatePKGConfigFile,
+};
