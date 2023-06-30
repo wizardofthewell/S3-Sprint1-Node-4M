@@ -6,6 +6,7 @@ app --help                            displays help
 app init --all                        creates the folder structure and config file
 app init --mk                         creates the folder structure
 app init --cat                        creates the config file with default settings
+app init --npm                        installs the npm packages
 app init --help
 app config --status                    displays a list of the current config settings
 app config --reset                    resets the config file with default settings
