@@ -17,29 +17,21 @@ const logEvent = async (event, level, message) => {
   const date = format(new Date(), "HH:mm:ss");
   const logItem = `${uuid()}\t${date}\t${level}\t${event}\t${message}`;
   if (DEBUG) console.log(logItem);
-  try {
-    const logDir =
-      "./logs/" + getYear(new Date()) + "/" + getMonth(new Date()) + "/";
-    if (!fs.existsSync(path.join(__dirname, logDir))) {
-      // this is fun... without the method {recursive: true }
-      //  mkdir will not create nested loops
-      console.log("Directory made");
-      await promise.mkdir(path.join(__dirname, logDir), { recursive: true });
-      emitEvent.emit("log", "logger", "WARNING", "New Directory Made.");
-    }
-    const file = `${format(new Date(), "dd")}_http_events.log`;
-    promise.appendFile(path.join(__dirname, logDir, file), logItem + "\n");
-  } catch (err) {
-    console.log(err);
-    emitEvent.emit("log", "logger", "ERROR", err);
+  const logDir =
+    "./src/logs/" + getYear(new Date()) + "/" + getMonth(new Date()) + "/";
+  if (!fs.existsSync(logDir)) {
+    // this is fun... without the method {recursive: true }
+    //  mkdir will not create nested loops
+    if (DEBUG) console.log("Directory made");
+    fs.mkdir(logDir, { recursive: true }, (err) => {
+      if (err) console.log(err);
+    });
   }
+  const file = `${format(new Date(), "dd")}_http_events.log`;
+  fs.writeFile(logDir + file, logItem + "\n", (err) => {
+    if (err) console.log(err);
+  });
 };
-
-////////////////////////////////////////////////
-// listener
-emitEvent.on("log", (event, level, message) => {
-  if (global.DEBUG) logEvent(event, level, message);
-});
 
 ////////////////////////////////////////////////
 // export
