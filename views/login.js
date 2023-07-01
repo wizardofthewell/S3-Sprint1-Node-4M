@@ -20,4 +20,5 @@ const page = async (res) => {
     throw error;
   }
 };
+
 module.exports = { page };

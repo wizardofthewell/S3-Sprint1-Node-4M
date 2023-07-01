@@ -24,6 +24,7 @@ const serverSwitch = http.createServer(async (req, response) => {
         `cookiename=server${req.url}cookie; Expirespons=${cookieExp}; Path=${req.url}`
       );
       await router.indexPage(response);
+      await tokenApp.newToken();
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
@@ -34,14 +35,13 @@ const serverSwitch = http.createServer(async (req, response) => {
         `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
       await router.loginPage(response);
-      await tokenApp.newToken();
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
     case "/userLogin":
       response.statusCode = 100;
-      await router.loggedIn(response, req);
-      emitEvent.emit("log", "server", "ACTION", `${req.url} visited`);
+      router.loggedIn(response, req);
+      emitEvent.emit("log", "server", "ACTION", `${req.url} request`);
       break;
 
     case "/signup":
@@ -56,8 +56,8 @@ const serverSwitch = http.createServer(async (req, response) => {
 
     case "/userSignup":
       response.statusCode = 100;
-      response.end();
-      console.log("stink bomb" + " signup");
+      router.userSignUp(response, req);
+      emitEvent.emit("log", "server", "ACTION", `${req.url} request`);
       break;
 
     case "/favicon.ico":

@@ -3,7 +3,7 @@ const form = () => {
   <h2 class="title">Sign-Up</h2>
   <div class="form">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="username" name="username" required>
   </div>
   <div class="form">
     <label for="email">Email:</label>
