@@ -154,7 +154,7 @@ const favicon = (response) => {
 ////////////////////////////////////////////////
 // listener
 emitEvent.on("log", (event, level, message) => {
-  if (global.DEBUG) logger.logEvent(event, level, message);
+  logger.logEvent(event, level, message);
 });
 
 ////////////////////////////////////////////////
