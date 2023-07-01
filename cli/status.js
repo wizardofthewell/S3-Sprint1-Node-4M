@@ -1,5 +1,9 @@
 const fs = require("fs");
-
+const {
+  resetPKGConfigFile,
+  updatePKGConfigFile,
+  viewPKGConfigFiles,
+} = require("./pkgconfig");
 const appStatus = () => {
   if (fs.existsSync("./src/logs")) {
     console.log("Logs directory exists.");
@@ -21,6 +25,17 @@ const appStatus = () => {
   } else {
     console.log("Users file does not exist.");
   }
+  if (fs.existsSync("./json/config.json")) {
+    console.log("Config file exists.");
+  } else {
+    console.log("Config file does not exist.");
+  }
+  if (fs.existsSync("./json/defaultpkglck.json")) {
+    console.log("DefaultPKGLock file exists.");
+  } else {
+    console.log("DefaultPKGLock file does not exist.");
+  }
+  viewPKGConfigFiles();
 };
 
 module.exports = {
