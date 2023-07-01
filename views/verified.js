@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////
 // framework
-const page = async (response) => {
-  const name = "Landing Page";
+const page = async (response, token) => {
+  const name = `welcome ${token.username}`;
   const style = global.STYLE;
   const head = `<head>${style}<title>${name}</title></head>`;
   const header = `<header><h1>${name}</h1>${global.NAV}</header>`;
