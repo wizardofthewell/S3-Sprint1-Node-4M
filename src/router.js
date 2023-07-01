@@ -80,6 +80,36 @@ const loggedIn = (response, req) => {
   index.page(response);
 };
 
+const userSignUp = (response, req) => {
+  if (global.DEBUG) console.log("User Sign-up requested");
+  let body = "";
+  response.statusCode = 200;
+
+  req.on("data", (data) => {
+    body += data;
+  });
+
+  req.on("end", async () => {
+    // Parse the form data
+    const formData = new URLSearchParams(body);
+
+    // Access values from named elements
+    const username = formData.get("username");
+    const password = formData.get("password");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+
+    // Do something with the username and password
+    await validate({ user: username, password: password });
+
+    // Send a response back to the client
+    response.statusCode = 200;
+    // response.setHeader("Content-Type", "text/plain");
+    response.end("Form submitted successfully");
+  });
+  index.page(response);
+};
+
 const favicon = (response) => {
   fs.readFile("favicon.ico", (err, data) => {
     if (err) {
@@ -135,4 +165,5 @@ module.exports = {
   signUpPage,
   favicon,
   loggedIn,
+  userSignUp,
 };

@@ -38,10 +38,11 @@ async function newToken(args) {
   let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
   tmpToken = {
     created: date,
-    username: args.username,
-    password: args.password,
-    email: "null",
-    phone: "null",
+    username: args && args.user ? args.user : "null",
+    password:
+      args && args.password ? crc32(args.password).toString(16) : "null",
+    email: args && args.email ? args.email : "null",
+    phone: args && args.phone ? args.phone : "null",
     token: tkn,
     expires: exp,
     confirmed: access,

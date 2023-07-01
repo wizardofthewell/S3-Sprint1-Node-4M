@@ -54,6 +54,12 @@ const serverSwitch = http.createServer(async (req, response) => {
       emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
       break;
 
+    case "/userSignup":
+      response.statusCode = 100;
+      response.end();
+      console.log("stink bomb" + " signup");
+      break;
+
     case "/favicon.ico":
       response.statusCode = 100;
       response.setHeader(

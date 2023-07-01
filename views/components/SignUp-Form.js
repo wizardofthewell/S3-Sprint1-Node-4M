@@ -1,5 +1,5 @@
 const form = () => {
-  return `<form class="form" method="post" action="/signup">
+  return `<form class="form" method="post" action="/userSignup">
   <h2 class="title">Sign-Up</h2>
   <div class="form">
     <label for="name">Name:</label>
