@@ -34,7 +34,6 @@ async function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = format(add(parseISO(date), { days: 1 }), "y-MM-dd HH:mm.ss");
-  let access = false;
   let tkn = crc32(`${access}#${date}#${exp}`);
   tmpToken = {
     created: date,
@@ -44,7 +43,7 @@ async function newToken(args) {
     phone: args && args.phone ? args.phone : "null",
     token: tkn,
     expires: exp,
-    confirmed: access,
+    confirmed: args ? true : false,
   };
 
   try {
@@ -76,18 +75,23 @@ async function updateToken(args) {
   // i want you to make the false bois tru
   if (global.DEBUG) console.log("token.updateToken()");
   if (global.DEBUG) console.log(args);
-  console.log("update token");
-  // fs.writeFile(
-  //   "./json/tokens.json",
-  //   JSON.stringify(await newToken(args)),
-  //   async (err) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       console.log("Tokens saved successfully.");
-  //     }
-  //   }
-  // );
+  let date = format(new Date(), "y-MM-dd HH:mm.ss");
+  let exp = format(add(parseISO(date), { days: 1 }), "y-MM-dd HH:mm.ss");
+  let tokens = [];
+  fs.readFile("./json/tokens.json", async (err, data) => {
+    if (err) console.log(err);
+    JSON.parse(data).forEach((token) => {
+      if (token.username === args[2]) {
+        token.token = crc32(`${token.confirmed}#${date}#${exp}`);
+        token.expires = exp;
+        console.log(`Updated Token for ${token.username}`);
+      }
+      tokens.push(token);
+    });
+    fs.writeFile("./json/tokens.json", JSON.stringify(tokens), (err) => {
+      if (err) console.log(err);
+    });
+  });
 }
 
 function searchForUser(args) {
