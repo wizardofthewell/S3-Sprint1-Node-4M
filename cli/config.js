@@ -39,12 +39,12 @@ const configApp = async (myArgs) => {
       break;
     case "--help":
     case "-h":
-      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+      fs.readFile("./usage.txt", (error, data) => {
         if (error) throw error;
         console.log(data.toString());
       });
     default:
-      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+      fs.readFile("./usage.txt", (error, data) => {
         if (error) throw error;
         console.log(data.toString());
       });
