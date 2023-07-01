@@ -120,6 +120,18 @@ const initializeApp = async (myArgs) => {
 
       console.log("Initialization complete.");
       break;
+    case "--help":
+    case "-h":
+      fs.readFile("./usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+    default:
+      fs.readFile("./usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+      break;
     case "--npm":
     case "-n":
       console.log("Initializing npm...");

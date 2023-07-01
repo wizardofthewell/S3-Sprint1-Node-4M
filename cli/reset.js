@@ -211,6 +211,18 @@ const resetApp = async (myArgs) => {
       );
       console.log("Done.");
       break;
+    case "--help":
+    case "-h":
+      fs.readFile("./usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+    default:
+      fs.readFile("./usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
+      break;
   }
 };
 
