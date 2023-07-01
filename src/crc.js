@@ -35,12 +35,11 @@ async function newToken(args) {
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
   let access = false;
-  let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
+  let tkn = crc32(`${access}#${date}#${exp}`);
   tmpToken = {
     created: date,
     username: args && args.user ? args.user : "null",
-    password:
-      args && args.password ? crc32(args.password).toString(16) : "null",
+    password: args && args.password ? crc32(args.password) : "null",
     email: args && args.email ? args.email : "null",
     phone: args && args.phone ? args.phone : "null",
     token: tkn,
@@ -49,7 +48,7 @@ async function newToken(args) {
   };
 
   try {
-    await fs.readFile("./json/tokens.json", async (error, data) => {
+    fs.readFile("./json/tokens.json", async (error, data) => {
       if (error) console.log(error);
       let tokens = await JSON.parse(data);
       if (!Array.isArray(tokens)) {
@@ -74,20 +73,23 @@ async function newToken(args) {
 }
 
 async function updateToken(args) {
+  // i want you to make the false bois tru
   if (global.DEBUG) console.log("token.updateToken()");
   if (global.DEBUG) console.log(args);
-  fs.writeFile(
-    "./json/tokens.json",
-    JSON.stringify(await newToken(args)),
-    async (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Tokens saved successfully.");
-      }
-    }
-  );
+  console.log("update token");
+  // fs.writeFile(
+  //   "./json/tokens.json",
+  //   JSON.stringify(await newToken(args)),
+  //   async (err) => {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       console.log("Tokens saved successfully.");
+  //     }
+  //   }
+  // );
 }
+
 function searchForUser(args) {
   if (global.DEBUG) console.log("token.searchForUser()");
   if (global.DEBUG) console.log(args);

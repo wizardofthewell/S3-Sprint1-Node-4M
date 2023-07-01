@@ -9,6 +9,7 @@ const events = require("events");
 class Event extends events {}
 const emitEvent = new Event();
 const fs = require("fs");
+const { crc32 } = require("crc");
 
 ////////////////////////////////////////////////
 // website routes
@@ -52,6 +53,24 @@ const styleSheet = (response) => {
   });
 };
 
+async function validate(args) {
+  fs.readFile("./json/tokens.json", async (err, data) => {
+    if (err) console.log(err);
+    let tokens = await JSON.parse(data);
+    await tokens.forEach(async (token) => {
+      if (args.user === token.username) {
+        if (crc32(args.password) === token.password) {
+          console.log("stink this be werking");
+        } else {
+          console.log("invalid password");
+        }
+      } else {
+        console.log("user not found - create an account");
+      }
+    });
+  });
+}
+
 const loggedIn = (response, req) => {
   if (global.DEBUG) console.log("User Login requested");
   let body = "";
@@ -70,12 +89,11 @@ const loggedIn = (response, req) => {
     const password = formData.get("password");
 
     // Do something with the username and password
-    await validate({ user: username, password: password });
-
+    await validate(response, { user: username, password: password });
     // Send a response back to the client
     response.statusCode = 200;
     // response.setHeader("Content-Type", "text/plain");
-    response.end("Form submitted successfully");
+    response.end();
   });
   index.page(response);
 };
@@ -100,14 +118,19 @@ const userSignUp = (response, req) => {
     const phone = formData.get("phone");
 
     // Do something with the username and password
-    await validate({ user: username, password: password });
+    await tokenApp.newToken({
+      user: username,
+      password: password,
+      email: email,
+      phone: phone,
+    });
 
     // Send a response back to the client
     response.statusCode = 200;
     // response.setHeader("Content-Type", "text/plain");
-    response.end("Form submitted successfully");
+    response.end();
   });
-  index.page(response);
+  login.page(response);
 };
 
 const favicon = (response) => {
@@ -127,33 +150,6 @@ const favicon = (response) => {
 emitEvent.on("log", (event, level, message) => {
   if (global.DEBUG) logger.logEvent(event, level, message);
 });
-
-////////////////////////////////////////////////
-// main
-
-async function validate(args) {
-  fs.readFile("./json/tokens.json", async (err, data) => {
-    if (err) console.log(err);
-    let tokens = await JSON.parse(data);
-    await tokens.forEach(async (token) => {
-      // console.log("stink fart", args);
-      tokenApp.newToken(args);
-
-      // if (args[0] === token.username && args[1] === token.password) {
-      //   console.log(args);
-      //   await tokenApp.updateToken(args);
-      //   index.page();
-      // } else {
-      //   console.log(args);
-      //   tokenApp.newToken();
-      //   login.page();
-      // }
-    });
-  });
-
-  // console.log(username, password);
-  // await fs.writeFileSync("./json/users.json", JSON.stringify(config, null, 2));
-}
 
 ////////////////////////////////////////////////
 // export
