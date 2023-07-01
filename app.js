@@ -46,8 +46,6 @@ async function main() {
   }
   if (config.debug == false) {
     global.DEBUG = false;
-  } else {
-    console.log("DEBUG is not set in config.json");
   }
   const myArgs = process.argv.slice(2);
   if (global.DEBUG)
