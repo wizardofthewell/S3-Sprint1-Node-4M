@@ -16,7 +16,6 @@ const resetApp = async () => {
     console.log("./json created");
   }
   fs.writeFileSync("./json/tokens.json", "{}");
-  fs.writeFileSync("./json/users.json", "{}");
   fs.writeFileSync("./json/config.json", `{"debug":false}`);
   fs.writeFileSync(
     "./json/defaultpkglck.json",

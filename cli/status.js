@@ -20,11 +20,6 @@ const appStatus = () => {
   } else {
     console.log("Tokens file does not exist.");
   }
-  if (fs.existsSync("./json/users.json")) {
-    console.log("Users file exists.");
-  } else {
-    console.log("Users file does not exist.");
-  }
   if (fs.existsSync("./json/config.json")) {
     console.log("Config file exists.");
   } else {

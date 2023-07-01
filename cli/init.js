@@ -26,7 +26,6 @@ const initializeApp = async (myArgs) => {
       dirCheck("./src/logs");
       dirCheck("./json");
       fileCheck("./json/tokens.json", "[]");
-      fileCheck("./json/users.json", "[]");
       fileCheck("./json/config.json", `{"debug":false}`);
       fileCheck(
         "./json/defaultpkglck.json",
