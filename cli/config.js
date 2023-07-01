@@ -26,7 +26,6 @@ const configApp = async (myArgs) => {
     case "-s":
       appStatus();
       break;
-    // global does not work this way sadly
     case "--settings":
     case "-set":
       if (myArgs[2] == "debug") {
@@ -38,6 +37,12 @@ const configApp = async (myArgs) => {
         }
       }
       break;
+    case "--help":
+    case "-h":
+      fs.readFile(__dirname + "/usage.txt", (error, data) => {
+        if (error) throw error;
+        console.log(data.toString());
+      });
     default:
       fs.readFile(__dirname + "/usage.txt", (error, data) => {
         if (error) throw error;
