@@ -33,7 +33,7 @@ function tokenList() {
 async function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
-  let exp = add(parseISO(date), { days: 1 });
+  let exp = format(add(parseISO(date), { days: 1 }), "y-MM-dd HH:mm.ss");
   let access = false;
   let tkn = crc32(`${access}#${date}#${exp}`);
   tmpToken = {

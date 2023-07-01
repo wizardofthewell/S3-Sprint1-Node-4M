@@ -61,6 +61,7 @@ async function validate(args) {
       if (args.user === token.username) {
         if (crc32(args.password) === token.password) {
           console.log("stink this be werking");
+          index.page();
         } else {
           console.log("invalid password");
         }
@@ -89,13 +90,12 @@ const loggedIn = (response, req) => {
     const password = formData.get("password");
 
     // Do something with the username and password
-    await validate(response, { user: username, password: password });
+    await validate({ user: username, password: password });
     // Send a response back to the client
     response.statusCode = 200;
     // response.setHeader("Content-Type", "text/plain");
     response.end();
   });
-  index.page(response);
 };
 
 const userSignUp = (response, req) => {
