@@ -30,49 +30,22 @@ function tokenList() {
   });
 }
 
-async function newToken(...args) {
+async function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = add(parseISO(date), { days: 1 });
   let access = false;
   let tkn = crc32(`${access}#${date}#${exp}`).toString(36);
-  console.log(args.length);
-  if (args.length === 0) {
-    tmpToken = {
-      created: date,
-      username: "null",
-      password: "null",
-      email: "null",
-      phone: "null",
-      token: tkn,
-      expires: exp,
-      confirmed: access,
-    };
-  }
-  if (args.length === 1) {
-    tmpToken = {
-      created: date,
-      username: args[0][0],
-      password: args[0][1],
-      email: "null",
-      phone: "null",
-      token: tkn,
-      expires: exp,
-      confirmed: access,
-    };
-  }
-  if (args.length === 5) {
-    tmpToken = {
-      created: date,
-      username: args[1],
-      password: args[2],
-      email: args[3],
-      phone: args[4],
-      token: tkn,
-      expires: exp,
-      confirmed: access,
-    };
-  }
+  tmpToken = {
+    created: date,
+    username: args.username,
+    password: args.password,
+    email: "null",
+    phone: "null",
+    token: tkn,
+    expires: exp,
+    confirmed: access,
+  };
 
   try {
     await fs.readFile("./json/tokens.json", async (error, data) => {

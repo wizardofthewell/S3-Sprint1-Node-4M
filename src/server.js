@@ -61,7 +61,7 @@ const serverSwitch = http.createServer(async (req, response) => {
         `cookiename=server${req.url}cookie; Expiresponse=${cookieExp}; Path=${req.url}`
       );
       await router.favicon(response);
-      emitEvent.emit("log", "server", "PAGE", `${req.url} visited`);
+      emitEvent.emit("log", "server", "PAGE", `${req.url} served`);
       break;
 
     case "/views/files/style.css":
