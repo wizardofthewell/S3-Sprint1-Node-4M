@@ -9,7 +9,7 @@ function dirCheck(directory) {
     console.log(`${directory} created`);
   }
 }
-const resetApp = async () => {
+const resetApp = async (myArgs) => {
   switch (myArgs[1]) {
     case "--all":
     case "-a":

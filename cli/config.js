@@ -20,7 +20,7 @@ const configApp = async (myArgs) => {
   switch (myArgs[1]) {
     case "--reset":
     case "-r":
-      resetApp();
+      resetApp(myArgs);
       resetPKGConfigFile();
     case "--status":
     case "-s":
