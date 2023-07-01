@@ -34,7 +34,7 @@ async function newToken(args) {
   if (global.DEBUG) console.log("token.newToken()");
   let date = format(new Date(), "y-MM-dd HH:mm.ss");
   let exp = format(add(parseISO(date), { days: 1 }), "y-MM-dd HH:mm.ss");
-  let tkn = crc32(`${access}#${date}#${exp}`);
+  let tkn = crc32(`#${date}#${exp}`);
   tmpToken = {
     created: date,
     username: args && args.user ? args.user : "null",
