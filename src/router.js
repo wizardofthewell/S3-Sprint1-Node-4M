@@ -18,7 +18,6 @@ const indexPage = (response) => {
   if (global.DEBUG) console.log("Index page requested");
   response.statusCode = 200;
   index.page(response);
-  console.log("stinky fart");
 };
 
 const loginPage = (response) => {
