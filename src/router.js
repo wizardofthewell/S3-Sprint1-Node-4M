@@ -4,6 +4,7 @@ const index = require("../views/index");
 const login = require("../views/login");
 const signUp = require("../views/signUp");
 const logger = require("./logger");
+const verified = require("../views/verified");
 const tokenApp = require("./crc");
 const events = require("events");
 class Event extends events {}
@@ -53,23 +54,29 @@ const styleSheet = (response) => {
   });
 };
 
-async function validate(args) {
-  fs.readFile("./json/tokens.json", async (err, data) => {
-    if (err) console.log(err);
-    let tokens = await JSON.parse(data);
-    await tokens.forEach(async (token) => {
+async function validate(response, args) {
+  try {
+    const data = await fs.promises.readFile("./json/tokens.json");
+    const tokens = JSON.parse(data);
+
+    for (const token of tokens) {
       if (args.user === token.username) {
         if (crc32(args.password) === token.password) {
-          console.log("stink this be werking");
-          index.page();
+          console.log("Valid username and password");
+          await verified.page(response, token);
+          return; // Return early after successful verification
         } else {
-          console.log("invalid password");
+          console.log("Invalid password");
+          await login.page(response);
+          return; // Return early after invalid password
         }
-      } else {
-        console.log("user not found - create an account");
       }
-    });
-  });
+    }
+    console.log("User not found - create an account");
+    await login.page(response);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 const loggedIn = (response, req) => {
@@ -90,7 +97,7 @@ const loggedIn = (response, req) => {
     const password = formData.get("password");
 
     // Do something with the username and password
-    await validate({ user: username, password: password });
+    await validate(response, { user: username, password: password });
     // Send a response back to the client
     response.statusCode = 200;
     // response.setHeader("Content-Type", "text/plain");

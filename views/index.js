@@ -6,9 +6,6 @@ const page = async (response) => {
   const head = `<head>${style}<title>${name}</title></head>`;
   const header = `<header><h1>${name}</h1>${global.NAV}</header>`;
   try {
-    await response.writeHead(response.statusCode, {
-      "Content-Type": "text/html",
-    });
     await response.end(`${head}<body>${header}</body>`);
   } catch (error) {
     response.statusCode = 500;
